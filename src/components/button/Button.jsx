@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Button.module.css';
-import {Link, useLocation} from 'react-router-dom'
+import {Link, useLocation, useNavigate} from 'react-router-dom'
 
 // Icon images
 import EyeClosed from '../../assets/icons/eye-closed.svg?react';
@@ -18,6 +18,7 @@ import ShapeOpen from '../../assets/shapes/shape-open.svg?react';
 
 function Button({ onLoadHtml }) {
   const location = useLocation();
+  const navigate = useNavigate();
   
   const buttonIcon = [
     { 
@@ -55,15 +56,23 @@ function Button({ onLoadHtml }) {
     
   ];
 
-  const handleClick = (href, e) => {
-    e.preventDefault();
-    if (onLoadHtml) onLoadHtml(href);
-  };
-
-  const handleKeyDown = (href, e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+  const handleNavigation = (href, isActive, e) => {
+    if (href.startsWith('/')) {
+      // Internal navigation
+      if (isActive && href !== '/') {
+        e.preventDefault();
+        navigate('/');
+      }
+    } else {
+      // External navigation
       e.preventDefault();
       if (onLoadHtml) onLoadHtml(href);
+    }
+  };
+
+  const handleKeyDown = (href, isActive, e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      handleNavigation(href, isActive, e);
     }
   };
 
@@ -72,29 +81,21 @@ function Button({ onLoadHtml }) {
    {buttonIcon.map(({ href, title, className, IconClosed, IconOpen }) => {
      const isActive = location.pathname === href;
      const CurrentIcon = isActive ? IconOpen : IconClosed;
+     const commonProps = {
+       key: href,
+       title,
+       'aria-label': `Navigate to ${title} page`,
+       className: `${styles['menu-icon']} ${styles[className]} ${isActive ? styles.active : ''}`,
+       onClick: (e) => handleNavigation(href, isActive, e),
+       onKeyDown: (e) => handleKeyDown(href, isActive, e),
+     };
      
-     return href.startsWith('/')
-       ? (
-         <Link
-           key={href}
-           to={href}
-           title={title}
-           aria-label={`Navigate to ${title} page`}
-           className={`${styles['menu-icon']} ${styles[className]}`}
-         >
+     return href.startsWith('/') ? (
+         <Link to={href} {...commonProps}>
            <CurrentIcon className={styles['icon-image']} aria-hidden="true" />
          </Link>
        ) : (
-         <a
-           key={href}
-           href={href}
-           title={title}
-           aria-label={`Navigate to ${title} page`}
-           className={`${styles['menu-icon']} ${styles[className]}`}
-           onClick={(e) => handleClick(href, e)}
-           onKeyDown={(e) => handleKeyDown(href, e)}
-           tabIndex="0"
-         >
+         <a href={href} {...commonProps} tabIndex="0">
            <CurrentIcon className={styles['icon-image']} aria-hidden="true" />
          </a>
        );

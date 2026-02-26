@@ -4,11 +4,15 @@
   width: 65px;
   height: 65px;
   pointer-events: auto;
-  transition: transform 0.2s;
+  transition: color 0.3s ease, transform 0.2s;
   cursor: pointer;
 }
 
 .menu-icon:hover {
+  color: #f08c00;
+}
+
+.menu-icon.active {
   color: #f08c00;
 }
 
