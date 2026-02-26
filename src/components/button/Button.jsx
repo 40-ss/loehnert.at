@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Button.module.css';
-import {Link, useLocation} from 'react-router-dom'
+import {Link, useLocation, useNavigate} from 'react-router-dom'
 
 // Icon images
 import EyeClosed from '../../assets/icons/eye-closed.svg?react';
@@ -18,6 +18,7 @@ import ShapeOpen from '../../assets/shapes/shape-open.svg?react';
 
 function Button({ onLoadHtml }) {
   const location = useLocation();
+  const navigate = useNavigate();
   
   const buttonIcon = [
     { 
@@ -80,7 +81,13 @@ function Button({ onLoadHtml }) {
            to={href}
            title={title}
            aria-label={`Navigate to ${title} page`}
-           className={`${styles['menu-icon']} ${styles[className]}`}
+           className={`${styles['menu-icon']} ${styles[className]} ${isActive ? styles.active : ''}`}
+           onClick={(e) => {
+             if (isActive && href !== '/') {
+               e.preventDefault();
+               navigate('/');
+             }
+           }}
          >
            <CurrentIcon className={styles['icon-image']} aria-hidden="true" />
          </Link>
@@ -90,7 +97,7 @@ function Button({ onLoadHtml }) {
            href={href}
            title={title}
            aria-label={`Navigate to ${title} page`}
-           className={`${styles['menu-icon']} ${styles[className]}`}
+           className={`${styles['menu-icon']} ${styles[className]} ${isActive ? styles.active : ''}`}
            onClick={(e) => handleClick(href, e)}
            onKeyDown={(e) => handleKeyDown(href, e)}
            tabIndex="0"
