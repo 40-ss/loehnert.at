@@ -40,8 +40,6 @@ export default function ProfileCard() {
               <h1>DI Gebhard Löhnert</h1>
               <div className="medium-text">
                 <p>Psychosozialer Berater</p>
-                <p>Lebens- und Sozialberatung</p>
-                <p>Coaching</p>
               </div>
             </header>
             <aside className="headshot">
