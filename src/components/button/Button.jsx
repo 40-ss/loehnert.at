@@ -21,7 +21,7 @@ function Button({ onLoadHtml }) {
   
   const buttonIcon = [
     { 
-      href: '/about', 
+      href: '/gebhard', 
       title: 'About', 
       className: 'eye',
       IconClosed: EyeClosed,
@@ -29,7 +29,7 @@ function Button({ onLoadHtml }) {
     },
   
     { 
-      href: '/methodology', 
+      href: '/methodik', 
       title: 'Methodology', 
       className: 'book',
       IconClosed: BookClosed,
@@ -46,7 +46,7 @@ function Button({ onLoadHtml }) {
     
 
     { 
-      href: '/contact', 
+      href: '/kontakt', 
       title: 'Contact', 
       className: 'letter',
       IconClosed: LetterClosed,
