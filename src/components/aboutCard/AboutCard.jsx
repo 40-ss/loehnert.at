@@ -4,14 +4,12 @@ function AboutCard(){
     return(
         <article className="text-container body-text">
             <header>
-                <h1>Über mich</h1>
+                <h1>Wer bin ich?</h1>
             </header>
             <p>
-                Ich bin Psychosozialer Berater und arbeite in Österreich.
-            </p>
-
-            <p>
-                Ich arbeite mit Menschen, die mit Stress, Familienproblemen, beruflicher Veränderung oder anderen bedeutenden Veränderungen in ihrem Leben zu kämpfen haben.
+                DI Gebhard Löhnert, Jahrgang 1967, Psychosozialer Berater in Ausbildung und unter Supervision; verheiratet und Vater von zwei erwachsenen Kindern. Vor einigen Jahren ist bei mir der Wunsch immer stärker geworden, neben meinem „Brotberuf“ als Informatiker eine Tätigkeit zu finden, bei der ich andere Menschen in herausfordernden Lebensphasen unterstützen kann. 
+                So habe ich eine Ausbildung zum Psychosozialen Systemischen Berater begonnen, die ich voraussichtlich 2026 abschließen werde. 
+                Ob Sie mit ihrem Stress nicht mehr zurecht kommen, Schwierigkeiten in Ihrer Beziehung oder in Ihrem Beruf haben oder vor einer größeren Entscheidung stehen: Ich freue mich darauf, Sie kennenzulernen und mit Ihnen gemeinsam neue Perspektiven zu finden und zu mehr Klarheit zu kommen!
             </p>
         </article>
     );
