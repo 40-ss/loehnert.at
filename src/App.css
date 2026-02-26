@@ -91,8 +91,8 @@
      align-items: center;
      gap: 20px;
      flex: 1;
-     transition: all 0.3s ease;
-     animation: fadeIn 0.45s ease-out;
+     transition: flex-direction 0.5s ease-in-out, padding 0.4s ease, gap 0.4s ease, margin-left 0.4s ease, text-align 0.4s ease;
+     animation: fadeIn 0.65s ease-out;
    }
    
    .info {
@@ -101,7 +101,7 @@
      justify-content: center;
      text-align: left;
      align-items: flex-start;
-     transition: all 0.3s ease;
+     transition: text-align 0.4s ease, align-items 0.4s ease, position 0.4s ease, left 0.4s ease;
    }
    
    h1 {
@@ -126,7 +126,7 @@
      border-radius: 20px;
      overflow: hidden;
      flex-shrink: 0;
-     transition: all 0.3s ease;
+     transition: margin 0.4s ease;
    }
    
    .headshot img {
