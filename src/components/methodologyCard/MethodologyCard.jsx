@@ -3,12 +3,12 @@ import { useState } from "react";
 const accordionData = [
   {
     id: 1,
-    heading: "Was ist Psychosoziale Beratung?",
+    heading: "Was ist Psychosozialer Berater?",
     content: (
       <p>
         Manchmal gerät das Leben aus dem Takt: Ob berufliche Krisen, familiäre
         Konflikte oder das Gefühl, festzustecken – oft reichen die gewohnten
-        Lösungswege nicht mehr aus. Psychosoziale Beratung ist eine
+        Lösungswege nicht mehr aus. Psychosozialer Berater ist eine
         professionelle Wegbegleitung. Sie ist lösungsorientiert und darauf
         ausgerichtet, Ihre Lebensqualität und Handlungsfähigkeit wieder zu
         verbessern.
@@ -70,7 +70,7 @@ const accordionData = [
     content: (
       <>
         <p>
-          Psychosoziale Beratung liefert (genau wie Psychotherapie) kein „Rezept“ für eine Lösung Ihres Problems 
+          Psychosozialer Berater liefert (genau wie Psychotherapie) kein „Rezept“ für eine Lösung Ihres Problems 
           –sie hilft mit, gemeinsam neue Perspektiven und neue Lösungsmöglichkeiten zu finden, im Gespräch und mithilfe verschiedener Methoden.
 
         </p>
@@ -86,7 +86,7 @@ const accordionData = [
     content: (
       <>
         <p>
-          Die psychosoziale Beratung richtet sich an psychisch gesunde Menschen in schwierigen Lebenslagen oder Veränderungsprozessen. 
+          Die Psychosozialer Berater richtet sich an psychisch gesunde Menschen in schwierigen Lebenslagen oder Veränderungsprozessen. 
           Sie ist keine Psychotherapie und ersetzt keine medizinische Behandlung. Mein Fokus liegt auf dem "Hier und Jetzt" sowie der Gestaltung Ihrer Zukunft.
         </p>
       
