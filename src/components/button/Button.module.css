@@ -4,7 +4,7 @@
   width: 65px;
   height: 65px;
   pointer-events: auto;
-  transition: color 0.3s ease, transform 0.2s;
+  transition: color 0.3s ease, transform 0.2s, width 0.3s ease, height 0.3s ease, top 0.3s ease, left 0.3s ease, right 0.3s ease, bottom 0.3s ease;
   cursor: pointer;
 }
 

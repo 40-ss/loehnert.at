@@ -90,12 +90,34 @@ function Button({ onLoadHtml }) {
        onKeyDown: (e) => handleKeyDown(href, isActive, e),
      };
      
-     return href.startsWith('/') ? (
-         <Link to={href} {...commonProps}>
+     return href.startsWith('/')
+       ? (
+         <Link
+           key={href}
+           to={href}
+           title={title}
+           aria-label={`Navigate to ${title} page`}
+           className={`${styles['menu-icon']} ${styles[className]} ${isActive ? styles.active : ''}`}
+           onClick={(e) => {
+             if (isActive && href !== '/') {
+               e.preventDefault();
+               navigate('/');
+             }
+           }}
+         >
            <CurrentIcon className={styles['icon-image']} aria-hidden="true" />
          </Link>
        ) : (
-         <a href={href} {...commonProps} tabIndex="0">
+         <a
+           key={href}
+           href={href}
+           title={title}
+           aria-label={`Navigate to ${title} page`}
+           className={`${styles['menu-icon']} ${styles[className]} ${isActive ? styles.active : ''}`}
+           onClick={(e) => handleClick(href, e)}
+           onKeyDown={(e) => handleKeyDown(href, e)}
+           tabIndex="0"
+         >
            <CurrentIcon className={styles['icon-image']} aria-hidden="true" />
          </a>
        );
