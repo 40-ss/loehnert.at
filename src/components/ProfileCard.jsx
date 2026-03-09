@@ -39,7 +39,7 @@ export default function ProfileCard() {
             <header className="info">
               <h1>DI Gebhard Löhnert</h1>
               <div className="medium-text">
-                <p>Psychosozialer Berater</p>
+                <p>Psychosozialer Berater i.A.u.S.</p>
               </div>
             </header>
             <aside className="headshot">
