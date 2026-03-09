@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // import './ProfileCard.css';
 import '../App.css';
-import Headshot from '/src/assets/images/gebhard.png';
+import Headshot from '/src/assets/images/gebhard.jpg';
 import Button from './button/Button';
 
 export default function ProfileCard() {
