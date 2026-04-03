@@ -22,24 +22,24 @@ function Button({ onLoadHtml }) {
   
   const buttonIcon = [
     { 
-      href: '/gebhard', 
-      title: 'About', 
+      href: '/methodik', 
+      title: 'Methodik', 
       className: 'eye',
       IconClosed: EyeClosed,
       IconOpen: EyeOpen,
     },
   
     { 
-      href: '/methodik', 
-      title: 'Methodology', 
+      href: '/book-page', 
+      title: 'book-page', 
       className: 'book',
       IconClosed: BookClosed,
       IconOpen: BookOpen,
     },
     
     { 
-      href: '/', 
-      title: 'Home', 
+      href: '/gebhard', 
+      title: 'About', 
       className: 'shape',
       IconClosed: ShapeClosed,
       IconOpen: ShapeOpen,
