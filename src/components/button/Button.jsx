@@ -30,8 +30,8 @@ function Button({ onLoadHtml }) {
     },
   
     { 
-      href: '/book-page', 
-      title: 'book-page', 
+      href: '/notizen', 
+      title: 'Notizen', 
       className: 'book',
       IconClosed: BookClosed,
       IconOpen: BookOpen,

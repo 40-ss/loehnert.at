@@ -3,6 +3,7 @@ import HomePage from "../pages/Home"
 import About from "../pages/aboutPage/About"
 import Methodology from "../pages/methodologyPage/Methodology"
 import Contact from "../pages/contactPage/ContactPage"
+import Book from "../pages/bookPage/Book";
 
 function Router(){
     return (
@@ -12,6 +13,7 @@ function Router(){
         <Route path="gebhard" element={<About />} />
         <Route path="methodik" element={<Methodology />} />
         <Route path="kontakt" element={<Contact />} />
+        <Route path="notizen" element={<Book />} />
       </Routes>
     </BrowserRouter>
   );    
