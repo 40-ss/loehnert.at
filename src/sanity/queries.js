@@ -25,6 +25,11 @@ export const methodologyQuery = `*[_type == "methodologyPage"][0]{
   }
 }`
 
+export const bookQuery = `*[_type == "bookPage"][0]{
+  heading,
+  body
+}`
+
 export const contactQuery = `*[_type == "contactPage"][0]{
   heading,
   intro,
