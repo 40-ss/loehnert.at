@@ -12,10 +12,10 @@ Currently, two official plugins are available:
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 
 
-## Using the CMS to update ethe site
+## Using the CMS to update the site
 
-Edit content: loehnert.sanity.studio
-Live site: loehnert.at
-Netlify site: loehnert.netlify.app
-Local dev: localhost:5173
-Local Studio: localhost:3333
+- Edit content: loehnert.sanity.studio
+- Live site: loehnert.at
+- Netlify site: loehnert.netlify.app
+- Local dev: localhost:5173
+- Local Studio: localhost:3333
