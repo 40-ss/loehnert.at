@@ -16,9 +16,7 @@ export const client = createClient({
   dataset,
   // API version pin: bump deliberately, never use "latest" in production.
   apiVersion: '2025-05-18',
-  // Public CDN: fast, cached, ~minute eventual-consistency lag after publishing.
-  // Set to false if you ever need read-after-write consistency.
-  useCdn: true,
+  useCdn: import.meta.env.PROD,
 })
 
 const builder = createImageUrlBuilder(client)
