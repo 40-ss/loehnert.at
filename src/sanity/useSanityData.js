@@ -1,4 +1,4 @@
-import {useEffect, useState, useCallback} from 'react'
+import {useEffect, useState} from 'react'
 import {client} from './client'
 
 export function useSanityData(query, params = {}) {
@@ -8,40 +8,39 @@ export function useSanityData(query, params = {}) {
 
   const paramsKey = JSON.stringify(params)
 
-  const fetchData = useCallback(() => {
+  useEffect(() => {
     let cancelled = false
+
+    function doFetch() {
+      client
+        .fetch(query, params)
+        .then((result) => {
+          if (cancelled) return
+          setData(result)
+          setLoading(false)
+        })
+        .catch((err) => {
+          if (cancelled) return
+          setError(err)
+          setLoading(false)
+        })
+    }
+
     setLoading(true)
     setError(null)
+    doFetch()
 
-    client
-      .fetch(query, params)
-      .then((result) => {
-        if (cancelled) return
-        setData(result)
-        setLoading(false)
-      })
-      .catch((err) => {
-        if (cancelled) return
-        setError(err)
-        setLoading(false)
-      })
+    // Real-time listener — refetches whenever a matching document changes
+    const subscription = client
+      .listen(query, params, {includeResult: false})
+      .subscribe(() => doFetch())
 
     return () => {
       cancelled = true
+      subscription.unsubscribe()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, paramsKey])
-
-  useEffect(() => {
-    return fetchData()
-  }, [fetchData])
-
-  // Refetch when the browser tab regains focus
-  useEffect(() => {
-    const handleFocus = () => fetchData()
-    window.addEventListener('focus', handleFocus)
-    return () => window.removeEventListener('focus', handleFocus)
-  }, [fetchData])
 
   return {data, error, loading}
 }
