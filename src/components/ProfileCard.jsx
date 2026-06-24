@@ -1,30 +1,27 @@
-import React, { useState, useEffect } from 'react';
-// import './ProfileCard.css';
+import {useState, useEffect} from 'react';
 import '../App.css';
-import Headshot from '/src/assets/images/gebhard.jpg';
 import Button from './button/Button';
+import {useSanityData, urlFor, queries} from '../sanity';
 
 export default function ProfileCard() {
   const [pageUrl, setPageUrl] = useState(null);
   const [htmlContent, setHtmlContent] = useState(null);
+  const {data: profile} = useSanityData(queries.profileQuery);
 
-  // When pageUrl changes, fetch the content
+  // When pageUrl changes (e.g. Impressum, Datenschutz), fetch the raw HTML.
+  // Independent from the Sanity-driven profile content.
   useEffect(() => {
     if (!pageUrl) {
       setHtmlContent(null);
       return;
     }
     fetch(pageUrl)
-      .then(res => {
+      .then((res) => {
         if (!res.ok) throw new Error('Failed to load page');
         return res.text();
       })
-      .then(html => {
-        setHtmlContent(html);
-      })
-      .catch(err => {
-        setHtmlContent(`<p>Error loading page: ${err.message}</p>`);
-      });
+      .then((html) => setHtmlContent(html))
+      .catch((err) => setHtmlContent(`<p>Error loading page: ${err.message}</p>`));
   }, [pageUrl]);
 
   return (
@@ -33,17 +30,22 @@ export default function ProfileCard() {
 
       <section className="card-content">
         {htmlContent ? (
-          <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+          <div dangerouslySetInnerHTML={{__html: htmlContent}} />
         ) : (
           <>
             <header className="info">
-              <h1>DI Gebhard Löhnert</h1>
+              <h1>{profile?.name}</h1>
               <div className="medium-text">
-                <p>Psychosozialer Berater i.A.u.S.</p>
+                <p>{profile?.title}</p>
               </div>
             </header>
             <aside className="headshot">
-              <img src={Headshot} alt="Portrait of Gebhard Löhnert, professional counselor and coach" />
+              {profile?.headshot && (
+                <img
+                  src={urlFor(profile.headshot).width(800).url()}
+                  alt={profile.headshot.alt ?? ''}
+                />
+              )}
             </aside>
           </>
         )}
