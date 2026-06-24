@@ -1,26 +1,14 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useCallback} from 'react'
 import {client} from './client'
 
-/**
- * Minimal fetch hook for Sanity GROQ queries.
- *
- * Returns `{data, error, loading}`. Cancels its setState calls if the
- * component unmounts mid-request to avoid the React "setState on unmounted
- * component" warning.
- *
- * For a small site this is enough. If query count grows, swap to
- * @sanity/react-loader or @tanstack/react-query for caching + dedup.
- */
 export function useSanityData(query, params = {}) {
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  // Stable key for the deps array — params is a plain object, comparing by
-  // reference would refire the effect on every render.
   const paramsKey = JSON.stringify(params)
 
-  useEffect(() => {
+  const fetchData = useCallback(() => {
     let cancelled = false
     setLoading(true)
     setError(null)
@@ -43,6 +31,17 @@ export function useSanityData(query, params = {}) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, paramsKey])
+
+  useEffect(() => {
+    return fetchData()
+  }, [fetchData])
+
+  // Refetch when the browser tab regains focus
+  useEffect(() => {
+    const handleFocus = () => fetchData()
+    window.addEventListener('focus', handleFocus)
+    return () => window.removeEventListener('focus', handleFocus)
+  }, [fetchData])
 
   return {data, error, loading}
 }
