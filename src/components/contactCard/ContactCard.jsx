@@ -1,39 +1,61 @@
-import  "./ContactCard.css"
-
+import {PortableText} from '@portabletext/react';
+import './ContactCard.css';
+import {useSanityData, queries} from '../../sanity';
 
 function ContactCard() {
+  const {data} = useSanityData(queries.contactQuery);
+
+  // Fall back to displayed phone number for the tel: link if no explicit
+  // dial-format is stored.
+  const telHref = data?.phoneHref || data?.phone;
+
   return (
     <article className="text-container">
       <header>
-        <h1>Kontakt aufnehmen</h1>
+        <h1>{data?.heading}</h1>
       </header>
       <section className="body-text">
-        <p>
-          Wenn Sie Kontakt aufnehmen möchten, senden Sie mir bitte hier eine Nachricht:
-        </p>
+        {data?.intro && <PortableText value={data.intro} />}
         <address>
           <ul className="contact-list">
-            <li>
-              E-Mail: <a href="mailto:gebhard@loehnert.com" aria-label="E-Mail an Gebhard Löhnert senden">gebhard@loehnert.com</a>
-            </li>
-            <li>
-              WhatsApp: <a href="https://api.whatsapp.com/send?phone=068120877866" aria-label="WhatsApp-Nachricht an Gebhard Löhnert senden" target="_blank" rel="noopener noreferrer">Nachricht senden</a>
-            </li>
-            <li>
-              Telefon: <a href="tel:+43681208778666" aria-label="Gebhard Löhnert anrufen">0681 20 877 866</a>
-            </li>
+            {data?.email && (
+              <li>
+                E-Mail:{' '}
+                <a
+                  href={`mailto:${data.email}`}
+                  aria-label={`E-Mail an ${data.email} senden`}
+                >
+                  {data.email}
+                </a>
+              </li>
+            )}
+            {data?.whatsappNumber && (
+              <li>
+                WhatsApp:{' '}
+                <a
+                  href={`https://api.whatsapp.com/send?phone=${data.whatsappNumber}`}
+                  aria-label="WhatsApp-Nachricht senden"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Nachricht senden
+                </a>
+              </li>
+            )}
+            {data?.phone && telHref && (
+              <li>
+                Telefon:{' '}
+                <a href={`tel:${telHref}`} aria-label={`Anrufen unter ${data.phone}`}>
+                  {data.phone}
+                </a>
+              </li>
+            )}
           </ul>
         </address>
-        <p>
-          Die erste Sitzung ist (immer) kostenlos.
-        </p>
-        <p>
-          Ich lege Wert darauf, eine sichere, einfühlsame und kooperative Umgebung zu schaffen, in der sich die Klienten gehört und unterstützt fühlen, wenn sie ihre Gedanken, Emotionen und Verhaltensweisen erforschen.
-        </p>
+        {data?.outro && <PortableText value={data.outro} />}
       </section>
     </article>
   );
 }
 
-
-export default ContactCard
+export default ContactCard;

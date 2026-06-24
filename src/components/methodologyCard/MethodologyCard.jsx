@@ -1,99 +1,6 @@
-import { useState } from "react";
-
-const accordionData = [
-  {
-    id: 1,
-    heading: "Was ist Psychosozialer Berater?",
-    content: (
-      <p>
-        Manchmal gerät das Leben aus dem Takt: Ob berufliche Krisen, familiäre
-        Konflikte oder das Gefühl, festzustecken – oft reichen die gewohnten
-        Lösungswege nicht mehr aus. Psychosozialer Berater ist eine
-        professionelle Wegbegleitung. Sie ist lösungsorientiert und darauf
-        ausgerichtet, Ihre Lebensqualität und Handlungsfähigkeit wieder zu
-        verbessern.
-      </p>
-    ),
-  },
-  {
-    id: 2,
-    heading: 'Und was bedeutet „Systemische Beratung"?',
-    content: (
-      <>
-        <p>
-          Ich lege Wert darauf, eine sichere, einfühlsame und kooperative
-          Umgebung zu schaffen, in der sich die Klienten gehört und unterstützt
-          fühlen, wenn sie ihre Gedanken, Emotionen und Verhaltensweisen
-          erforschen.
-        </p>
-        <p>
-          Ich arbeite nach dem systemischen Ansatz. Das bedeutet: Ich betrachte
-          Sie nicht isoliert, sondern als Teil Ihrer sozialen Systeme (Familie,
-          Partnerschaft, Arbeitsumfeld, Freunde …).
-        </p>
-        <p>Es geht um den Blick auf das Ganze, wenn man ein Problem verstehen möchte:</p>
-        <ul>
-          <li>
-            <strong>Alles hängt zusammen:</strong> Stellen Sie sich ein Mobile
-            vor. Bewegt sich ein Teil, geraten auch alle anderen in Bewegung.
-            Oft liegt die Lösung für ein Problem nicht nur in uns selbst,
-            sondern in der Art und Weise, wie wir mit anderen interagieren.
-          </li>
-          <li>
-            <strong>Experte für Ihr Leben:</strong> In der systemischen Beratung
-            sehe ich mich als Experte für den Prozess – Sie hingegen bleiben der
-            Experte für Ihr Leben. Gemeinsam finden wir heraus, welche
-            Ressourcen in Ihnen schlummern.
-          </li>
-        </ul>
-      </>
-    ),
-  },
-  {
-    id: 3,
-    heading: 'Was kann ich von Beratung erwarten?',
-    content: (
-      <>
-        <p>
-          In unseren Gesprächen nutzen wir verschiedene Methoden, um neue Perspektiven einzunehmen, neue Sichten auf Ihre Situation zu erhalten und mögliche neue Handlungsräume zu finden. 
-        </p>
-        <p>
-          Ich verstehe meine Beratungsarbeit als Begleitung auf Augenhöhe. Sie bringen ihr Wissen über ihr Leben mit, ich bringe Werkzeuge, Struktur und einen offenen Blick für neue Perspektiven ein. 
-          Im Mittelpunkt stehen Sie selbst – mit ihren Stärken, Erfahrungen und ihrem ganz individuellen Weg.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 4,
-    heading: 'Was kann ich von Beratung nicht erwarten?',
-    content: (
-      <>
-        <p>
-          Psychosozialer Berater liefert (genau wie Psychotherapie) kein „Rezept“ für eine Lösung Ihres Problems 
-          –sie hilft mit, gemeinsam neue Perspektiven und neue Lösungsmöglichkeiten zu finden, im Gespräch und mithilfe verschiedener Methoden.
-
-        </p>
-        <p>
-          Lösungs-Garantie gibt es keine! Aber Sie können sicher sein, dass ich mich Ihnen und Ihrem Anliegen ernsthaft und professionell widme!
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 5,
-    heading: 'Was ist der Unterschied zwischen Psychosozialer Beratung und Therapie?',
-    content: (
-      <>
-        <p>
-          Die Psychosozialer Berater richtet sich an psychisch gesunde Menschen in schwierigen Lebenslagen oder Veränderungsprozessen. 
-          Sie ist keine Psychotherapie und ersetzt keine medizinische Behandlung. Mein Fokus liegt auf dem "Hier und Jetzt" sowie der Gestaltung Ihrer Zukunft.
-        </p>
-      
-      </>
-    ),
-  },
-];
+import {useState} from 'react';
+import {PortableText} from '@portabletext/react';
+import {useSanityData, queries} from '../../sanity';
 
 const accordionStyles = `
   .accordion {
@@ -192,14 +99,10 @@ const accordionStyles = `
   }
 `;
 
-function AccordionItem({ item, isOpen, onToggle }) {
+function AccordionItem({item, isOpen, onToggle}) {
   return (
-    <div className={`accordion-item${isOpen ? " open" : ""}`}>
-      <button
-        className="accordion-header"
-        onClick={onToggle}
-        aria-expanded={isOpen}
-      >
+    <div className={`accordion-item${isOpen ? ' open' : ''}`}>
+      <button className="accordion-header" onClick={onToggle} aria-expanded={isOpen}>
         <span className="accordion-header-text">{item.heading}</span>
         <span className="accordion-icon" aria-hidden="true">
           <svg
@@ -222,7 +125,7 @@ function AccordionItem({ item, isOpen, onToggle }) {
       <div className="accordion-body" aria-hidden={!isOpen}>
         <div className="accordion-body-inner">
           <div className="accordion-content body-text">
-            {item.content}
+            {item.content && <PortableText value={item.content} />}
           </div>
         </div>
       </div>
@@ -231,10 +134,12 @@ function AccordionItem({ item, isOpen, onToggle }) {
 }
 
 function MethodologyCard() {
-  const [openId, setOpenId] = useState(null);
+  const [openKey, setOpenKey] = useState(null);
+  const {data} = useSanityData(queries.methodologyQuery);
+  const items = data?.items ?? [];
 
-  const handleToggle = (id) => {
-    setOpenId((prev) => (prev === id ? null : id));
+  const handleToggle = (key) => {
+    setOpenKey((prev) => (prev === key ? null : key));
   };
 
   return (
@@ -242,15 +147,15 @@ function MethodologyCard() {
       <style>{accordionStyles}</style>
       <article className="text-container">
         <header>
-          <h1>Methodik</h1>
+          <h1>{data?.heading}</h1>
         </header>
         <div className="accordion">
-          {accordionData.map((item) => (
+          {items.map((item) => (
             <AccordionItem
-              key={item.id}
+              key={item._key}
               item={item}
-              isOpen={openId === item.id}
-              onToggle={() => handleToggle(item.id)}
+              isOpen={openKey === item._key}
+              onToggle={() => handleToggle(item._key)}
             />
           ))}
         </div>
